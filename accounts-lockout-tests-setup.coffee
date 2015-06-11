@@ -16,7 +16,6 @@ Meteor.methods
   isAccountLocked: (username) ->
     user = Meteor.users.findOne username: username
     throw new Meteor.Error 'isAccountLocked - user not found' unless user
-    console.log user
     Boolean user.services?['accounts-lockout']?.unlockTime
 
 
