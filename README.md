@@ -2,7 +2,7 @@
 
 ### Use
 
-Locks user accounts for `duration` seconds after entering wrong password `attempts` times in row. 
+Locks user accounts for `duration` seconds after them having entered wrong passwords `attempts` times in a row.
 `duration` = 15 and `attempts` = 5 by default and can be overriden in settings file:
 
 ``` json

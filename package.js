@@ -1,7 +1,7 @@
 Package.describe({
   name: 'accounts-lockout',
-  version: '0.0.1',
-  summary: 'Locks user accounts for N seconds after them having entered wrong passwords M times in row',
+  version: '0.9.0',
+  summary: 'Meteor package for locking user accounts and stopping brute force password attacks',
   git: 'https://github.com/eluck/meteor-accounts-lockout',
   documentation: 'README.md'
 });
