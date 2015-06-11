@@ -18,7 +18,7 @@ Package.onTest(function(api) {
   api.use(['accounts-base', 'accounts-password', 'tinytest', 'test-helpers', 'tracker',
      'random', 'email', 'underscore', 'check',
     'ddp']);
-  api.use(['coffeescript', 'accounts-lockout']);
+  api.use(['coffeescript', 'eluck:accounts-lockout']);
   api.addFiles(['password_tests_setup.js', 'accounts-lockout-tests-setup.coffee'], 'server');
   api.addFiles('accounts-lockout-tests.coffee');
 });
