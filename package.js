@@ -19,6 +19,6 @@ Package.onTest(function(api) {
      'random', 'email', 'underscore', 'check',
     'ddp']);
   api.use(['coffeescript', 'accounts-lockout']);
-  api.addFiles('password_tests_setup.js', 'server');
+  api.addFiles(['password_tests_setup.js', 'accounts-lockout-tests-setup.coffee'], 'server');
   api.addFiles('accounts-lockout-tests.coffee');
 });

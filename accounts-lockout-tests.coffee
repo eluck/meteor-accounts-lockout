@@ -1,12 +1,17 @@
 if Meteor.isServer
-  Tinytest.add 'accounts-lockout defined', (test) ->
+  Tinytest.add 'AccountsLockout is defined on server', (test) ->
     test.ok AccountsLockout
+
+
+if Meteor.isClient
+  Tinytest.add 'AccountsLockout is not defined on client', (test) ->
+    test.throws -> AccountsLockout
 
 
 Accounts._noConnectionCloseDelayForTest = true
 Accounts._isolateLoginTokenForTest() if Meteor.isClient
 
-#picked from accounts-password package
+#picked from accounts-password package as is
 `
 if (Meteor.isServer) {
   Meteor.methods({
@@ -65,8 +70,8 @@ if Meteor.isClient
         @username = Random.id()
         @email = Random.id() + '-intercept@example.com'
         @password = 'password';
-        Accounts.createUser username: this.username, email: this.email, password: this.password,
-          loggedInAs this.username, test, expect
+        Accounts.createUser username: @username, email: @email, password: @password,
+          loggedInAs @username, test, expect
 
 
       (test, expect) ->
@@ -77,36 +82,79 @@ if Meteor.isClient
 
 
       (test, expect) ->
-        Meteor.loginWithPassword this.username, this.password, loggedInAs this.username, test, expect
+        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
+          test.ok error
 
-        
+
+      (test, expect) ->
+        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
+          test.ok error
+
+
+      (test, expect) ->
+        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
+          test.ok error
+
+
+      (test, expect) ->
+        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
+          test.ok error
+
+
+      (test, expect) ->
+        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
+          test.ok error
+
+
+      (test, expect) ->
+        Meteor.call 'isAccountLocked', @username, expect (error, result) ->
+          test.equal result, true
+
     ]
+
+
+
+    testAsyncMulti "accounts-lockout - automatically unlock user after timeout", [
+      (test, expect) ->
+        # setup
+        @username = Random.id()
+        @email = Random.id() + '-intercept@example.com'
+        @password = 'password';
+        Accounts.createUser username: @username, email: @email, password: @password,
+          loggedInAs @username, test, expect
+
+
+      (test, expect) ->
+        test.notEqual(Meteor.userId(), null)
+
+
+      logoutStep
+
+
+      (test, expect) ->
+        Meteor.call 'makeAccountAlmostLocked', @username, expect (error, result) ->
+          test.equal result, true
+
+
+      (test, expect) ->
+        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
+          test.ok error
+
+
+      (test, expect) ->
+        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
+          test.ok error
+
+
+      (test, expect) ->
+        Meteor.call 'returnAfterLockTimeout', expect (error, result) ->
+          test.equal result, true
+
+
+      (test, expect) ->
+        Meteor.loginWithPassword @username, @password,
+          loggedInAs @username, test, expect
+
+    ]
+
   )()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
