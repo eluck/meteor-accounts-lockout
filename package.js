@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'accounts-lockout',
+  name: 'eluck:accounts-lockout',
   version: '0.9.0',
   summary: 'Meteor package for locking user accounts and stopping brute force password attacks',
   git: 'https://github.com/eluck/meteor-accounts-lockout',
