@@ -8,14 +8,15 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
-  api.use('accounts-password');
-  api.use('coffeescript');
-  api.addFiles('accounts-lockout.coffee');
+  api.use('accounts-password', 'server');
+  api.use('coffeescript', 'server');
+  api.addFiles('accounts-lockout.coffee', 'server');
+  api.export('AccountsLockout', 'server');
 });
 
 Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('accounts-password');
-  api.use('accounts-lockout');
-  api.addFiles('accounts-lockout-tests.js');
+  api.use('tinytest', 'server');
+  api.use('accounts-password', 'server');
+  api.use('accounts-lockout', 'server');
+  api.addFiles('accounts-lockout-tests.js', 'server');
 });
