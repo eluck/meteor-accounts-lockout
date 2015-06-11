@@ -1,22 +1,21 @@
 Package.describe({
   name: 'accounts-lockout',
   version: '0.0.1',
-  // Brief, one-line summary of the package.
-  summary: '',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
-  // By default, Meteor will default to using README.md for documentation.
-  // To avoid submitting documentation, set this field to null.
+  summary: 'Locks user accounts for N seconds after entering wrong password M times in row',
+  git: 'https://github.com/eluck/meteor-accounts-lockout',
   documentation: 'README.md'
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.2');
-  api.addFiles('accounts-lockout.js');
+  api.versionsFrom('1.0');
+  api.use('accounts-password');
+  api.use('coffeescript');
+  api.addFiles('accounts-lockout.coffee');
 });
 
 Package.onTest(function(api) {
   api.use('tinytest');
+  api.use('accounts-password');
   api.use('accounts-lockout');
   api.addFiles('accounts-lockout-tests.js');
 });
