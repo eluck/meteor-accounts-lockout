@@ -12,6 +12,7 @@ Accounts._noConnectionCloseDelayForTest = true
 Accounts._isolateLoginTokenForTest() if Meteor.isClient
 
 #picked from accounts-password package as is
+#https://github.com/meteor/meteor/blob/7ca7749b6eafc02762d87c4b50176e29b877fa6b/packages/accounts-password/password_tests.js#L3-L53
 `
 if (Meteor.isServer) {
   Meteor.methods({
@@ -63,7 +64,7 @@ if (Meteor.isClient) {
 
 
 if Meteor.isClient
-  ( ->
+  do ->
     testAsyncMulti "accounts-lockout - lock a user after 5 failed attempts", [
       (test, expect) ->
         # setup
@@ -142,8 +143,8 @@ if Meteor.isClient
 
 
       (test, expect) ->
-        Meteor.loginWithPassword @username, 'wrongPassword', expect (error) ->
-          test.ok error
+        Meteor.call 'isAccountLocked', @username, expect (error, result) ->
+          test.equal result, true
 
 
       (test, expect) ->
@@ -154,7 +155,4 @@ if Meteor.isClient
       (test, expect) ->
         Meteor.loginWithPassword @username, @password,
           loggedInAs @username, test, expect
-
     ]
-
-  )()
